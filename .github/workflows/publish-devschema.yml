@@ -1,0 +1,33 @@
+name: Deploy to devschema
+on: 
+  push:
+    branches: [ schedule_data_service ]
+jobs:
+  deploy:
+    name: "Deploy schedule_data_service to devschema.nodehill.com"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/dev.key
+          chmod 600 ~/.ssh/dev.key
+          cat >>~/.ssh/config <<END
+          Host dev
+            HostName $SSH_HOST
+            User $SSH_USER
+            Port $SSH_PORT
+            IdentityFile ~/.ssh/dev.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}          
+
+      - name: Deploy from schedule_data_service
+        run: ssh dev 'cd /var/www/nodehill-schedule-dev && git fetch && git reset --hard origin/schedule_data_service && npm install'
+
+      - name: Restart app
+        run: ssh dev 'cd /var/www/nodehill-schedule-dev/schedule-data-service && pm2 restart index'        
