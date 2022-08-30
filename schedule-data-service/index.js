@@ -26,6 +26,9 @@ server.use(function(req,res,next){req.bypassVerification = true; next()})
 const acl = require('./services/acl.js')
 server.use(acl)
 
+// response headers
+const setResultHeaders = require('./modules/set-result-headers')
+
 // start
 server.listen(port,() => {
   console.log(host)
@@ -47,18 +50,21 @@ require('./routes/login.js')(server, db)
 const apiDescription = require('./api-description.js')(host)
 
 server.get("/data", async (req, res) => {
+  setResultHeaders(res, apiDescription)
   res.json(apiDescription)
 })
 
 server.get('/data/calendar/:from/:to', (req, res)=>{
-    const cal = calendar.makeCalendar(req.params.from, req.params.to, req.params.locale)
-    const populated = calendar.populateCalendar(cal)
-    res.json(populated)
+  const cal = calendar.makeCalendar(req.params.from, req.params.to, req.params.locale)
+  const populated = calendar.populateCalendar(cal)
+  setResultHeaders(res, populated)
+  res.json(populated)
 })
 
 server.get('/data/courses/:from/:to', (req, res)=>{
   let query = "SELECT * FROM courses WHERE startDate >= @startDate AND endDate <= @endDate"
   let result = db.prepare(query).all({startDate: req.params.from, endDate: req.params.to})
+  setResultHeaders(res, result)
   res.json(result)
 })
 
@@ -66,6 +72,7 @@ server.post('/data/courses', (req, res)=>{
   let query = "INSERT INTO courses VALUES(@id, @name, @shortName, @class, @points, @startDate, @endDate, @plan, @invoiceItem, @hoursPerDay)"
   let statement = db.prepare(query)
   let result = statement.run(req.body)
+  setResultHeaders(res, result)
   res.json(result)
 })
 
@@ -75,7 +82,7 @@ server.get('/data/classes_view/:all?', (req, res)=>{
     query = "SELECT * FROM classes_view WHERE ORDER BY schoolShortName, shortName"
   }else{
     query = "SELECT * FROM classes_view WHERE hide = 0 ORDER BY schoolShortName, shortName"
-  }  
+  }
   let result = db.prepare(query).all()
 
   for(let i=result.length-1;i>=0;i--){
@@ -85,6 +92,7 @@ server.get('/data/classes_view/:all?', (req, res)=>{
       break;
     }
   }
+  setResultHeaders(res, result)
   res.json(result)
 })
 
@@ -97,6 +105,7 @@ server.post('/data/invoices/', (req, res)=>{
     })
   }
   let createdInvoice = createInvoice(req.body, db)
+  setResultHeaders(res, createdInvoice)
   res.json(createdInvoice)
 })
 
@@ -107,5 +116,6 @@ server.post('/data/generate-schedule', generateSchedule)
 server.get('/data/:table', (req, res)=>{ // but limit which tables to query with ACL
   let query = "SELECT * FROM " + req.params.table
   let result = db.prepare(query).all()
+  setResultHeaders(res, result)
   res.json(result)
 })
