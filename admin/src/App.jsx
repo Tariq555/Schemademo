@@ -5,7 +5,7 @@ import { PostList } from './posts';
 import { PostEdit } from "./post-edit";
 import { PostCreate} from "./post-create";
 import { UserList } from './users';
-import { SchoolList, SchoolEdit, SchoolCreate } from "./schools";
+import { SchoolList, SchoolEdit, SchoolCreate } from './schools';
 import { TeacherList } from './teachers';
 import { ClassesList } from './classes';
 //import jsonServerProvider from 'ra-data-json-server';
@@ -25,7 +25,7 @@ const App = () => (
     <Resource name="posts" list={PostList} edit={PostEdit} create={PostCreate} icon={PostIcon} />
     <Resource name="users" list={UserList} icon={UserIcon} />
     <Resource name="teachers" list={TeacherList} icon={UserIcon} />
-    <Resource name="schools" list={SchoolList} icon={UserIcon} edit={SchoolEdit} create={SchoolCreate} />
+    <Resource name="schools" list={SchoolList} edit={SchoolEdit} create={SchoolCreate} icon={UserIcon} />
     <Resource name="classes" list={ClassesList} icon={UserIcon} />
   </Admin>
 );
