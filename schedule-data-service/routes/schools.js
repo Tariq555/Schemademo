@@ -2,9 +2,9 @@ const encrypt = require('../modules/encrypt.js')
 
 module.exports = function (server, db) {
 
-  server.get('/data/schools', (req, res) => {
-    let query = "SELECT id FROM schools"
-    let result = db.prepare(query).all()
+  server.get('/data/schools/:id', (req, res) => {
+    let query = "SELECT * FROM schools WHERE id = ?"
+    let result = db.prepare(query).all([req.params.id])
     res.setHeader('Content-Range', result.length);
     res.setHeader('X-Total-Count', result.length);
     res.json(result)
@@ -12,11 +12,11 @@ module.exports = function (server, db) {
 
   // registrera en ny skola
    server.post('/data/schools', (request, response) => {
+    console.log(request)
      let user = request.body
-     let encryptedPassword = encrypt(user.password)
      let result
      try {
-      result = db.prepare('INSERT INTO schools (email, password) VALUES(?,?)').run([user.email, encryptedPassword])
+      result = db.prepare('INSERT INTO schools (name, shortName) VALUES(?,?)').run([user.name, user.shortName])
      } catch (e) {
        console.error(e)
      }

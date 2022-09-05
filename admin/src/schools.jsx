@@ -1,8 +1,18 @@
-import { Datagrid, List, TextField, Edit, EditButton, SimpleForm, Create, TextInput} from 'react-admin';
+import * as React from "react";
+import { 
+  Datagrid, 
+  List, 
+  TextField, 
+  Edit, 
+  EditButton, 
+  SimpleForm, 
+  Create, 
+  TextInput,
+} from 'react-admin';
 
-export const SchoolList = () => (
-  <List>
-      <Datagrid rowClick="edit">
+export const SchoolList = props => (
+  <List {...props}>
+      <Datagrid>
           <TextField source="id" />
           <TextField source="name" />
           <TextField source="shortName" />
@@ -11,12 +21,12 @@ export const SchoolList = () => (
   </List>
 );
 
-export const SchoolEdit = () => (
-  <Edit title="Edit schools">
+export const SchoolEdit = props => (
+  <Edit title="Edit schools" {...props}>
       <SimpleForm>
           <TextInput disabled source="id" />
           <TextInput source="name" />
-          <TextInput source="shortname" />
+          <TextInput source="shortName" />
       </SimpleForm>
   </Edit>
 
