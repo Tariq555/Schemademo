@@ -48,8 +48,8 @@ module.exports = function(host){
         },
         {
             route:"/data/schools",
-            methods: ["GET", "POST", "PUT"],
-            description:"Get list of schools, create school, change school details",
+            methods: ["GET", "POST", "PUT", "DELETE"],
+            description:"Get list of schools, create school, change school details, delete school",
             link: host  + "/data/schools"
         },
         {
