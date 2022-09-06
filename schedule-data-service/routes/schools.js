@@ -23,19 +23,6 @@ module.exports = function (server, db) {
      response.json(result)
    })
 
-
-  // uppdatera en skola
-  server.put('/data/schools', (request, response) => {
-    let user = request.body
-    let result
-    try {
-      result = db.prepare('UPDATE schools SET name = ?, shortName = ?').run([user.name, user.shortName])
-    } catch (e) {
-      console.error(e)
-    }
-    response.json(result)
-  })
-
   // ta bort en skola
   server.delete('/data/:table/:id', (req, res)=>{ 
     let query = "DELETE FROM " + req.params.table + " WHERE id = @id"
@@ -47,6 +34,5 @@ module.exports = function (server, db) {
     }
       res.json(result)
     })
-
 
 }

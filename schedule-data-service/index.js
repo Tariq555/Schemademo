@@ -119,4 +119,22 @@ server.get('/data/:table', (req, res)=>{ // but limit which tables to query with
   let result = db.prepare(query).all()
   setResultHeaders(res, result)
   res.json(result)
-})
+  })
+
+server.put('/data/:table/:id', (request, response) =>{ // but limit which tables to query with ACL
+  let query = "UPDATE " + request.params.table + " SET "
+  for(const [key, value] of Object.entries(request.body))
+  {
+    query += (`${key} = '${value}', `);
+  }
+  query = query.replace(/,\s*$/, "")
+  query += ' WHERE id = @id'
+  let result;
+  try{
+    result = db.prepare(query).run({id: request.params.id})
+  }
+  catch(error){
+    console.log(error)
+  }
+  response.json(result)
+  })
