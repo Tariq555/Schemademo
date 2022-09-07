@@ -37,6 +37,7 @@ module.exports = function (server, db) {
   })
 
 
+  
   // begär ändring av lösenord för användare
   server.delete('/data/teachers/password', (request, response) => {
     let user = request.body
