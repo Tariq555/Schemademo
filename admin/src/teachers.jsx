@@ -9,7 +9,11 @@ import {
   Create,
   SimpleForm,
   ReferenceInput,
-  TextInput
+  TextInput,
+  BooleanField,
+  BooleanInput,
+  PasswordInput,
+  required
 } from 'react-admin';
 
 export const TeacherList = () => (
@@ -22,28 +26,29 @@ export const TeacherList = () => (
       <TextField source="phone" />
       <EmailField source="email" />
       <TextField source="color" />
-      <TextField source="hide" />
+      <BooleanField source="hide" />
       <TextField source="password" />
       <TextField source="roles" />
       <EditButton />
     </Datagrid>
   </List>
-)
+);
+
+
 
 // in src/posts.js
 export const TeacherEdit = () => (
   <Edit>
     <SimpleForm>
-      <TextField source="id" reference="teachers" />
+      <TextField disabled source="id" reference="teachers" />
       <TextInput source="firstname" />
       <TextInput source="lastname" />
       <TextInput source="initials" />
       <TextInput source="phone" />
-      <TextInput source="email" />
+      <TextInput label="Email Address" source="email" type="email" />
       <TextInput source="color" />
-      <TextInput source="hide" />
-      <TextInput source="password" />
-      <TextInput source="roles" />
+      <BooleanInput label="hide" source="hide" defaultValue={0} />
+      
     </SimpleForm>
   </Edit>
 );
@@ -53,15 +58,15 @@ export const TeacherEdit = () => (
 export const TeacherCreate = props => (
   <Create {...props} >
     <SimpleForm>
-      <TextField source="id" reference="teachers" />
+      <TextField disabled source="id" reference="teachers" />
       <TextInput source="firstname" />
       <TextInput source="lastname" />
       <TextInput source="initials" />
       <TextInput source="phone" />
-      <TextInput source="email" />
+      <TextInput label="Email Address" source="email" type="email" />
       <TextInput source="color" />
-      <TextInput source="hide" />
-      <TextInput source="password" />
+      <BooleanInput label="hide" source="hide" defaultValue={0} />
+      <PasswordInput source="password" />
       <TextInput source="roles" />
     </SimpleForm >
   </Create >
