@@ -23,18 +23,4 @@ module.exports = function (server, db) {
      response.json(result)
    })
 
-
-  // uppdatera en skola
-  server.put('/data/schools', (request, response) => {
-    let user = request.body
-    let result
-    try {
-      result = db.prepare('UPDATE schools SET name = ?, shortName = ?').run([user.name, user.shortName])
-    } catch (e) {
-      console.error(e)
-    }
-    response.json(result)
-  })
-
-
 }
