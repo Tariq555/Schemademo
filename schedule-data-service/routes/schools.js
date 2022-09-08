@@ -23,16 +23,4 @@ module.exports = function (server, db) {
      response.json(result)
    })
 
-  // ta bort en skola
-  server.delete('/data/:table/:id', (req, res)=>{ 
-    let query = "DELETE FROM " + req.params.table + " WHERE id = @id"
-    let result
-    try{
-      result = db.prepare(query).run({id:req.params.id})
-    } catch(e){
-      console.error(e)
-    }
-      res.json(result)
-    })
-
 }
