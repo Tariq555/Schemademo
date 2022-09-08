@@ -109,3 +109,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+#Database
+schedule-data-service/database/nodehill_schedule.db
