@@ -35,10 +35,10 @@ export const ClassesList = () => (
   </List>
 );
 
-export const ClassesEdit = () => (
-  <Edit>
+export const ClassesEdit = props => (
+  <Edit {...props}>
     <SimpleForm>
-      <TextField disabled source="id" reference="classes" />
+      <TextField disabled source="id"/>
       <TextInput source="name" />
       <TextInput source="shortName" />
       <TextInput source="school" />
