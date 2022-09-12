@@ -18,17 +18,18 @@ import {
 
 export const ClassesList = () => (
   <List>
-    <Datagrid rowClick="edit">
+    <Datagrid>
       <TextField source="id" reference="classes" />
       <TextField source="name" />
       <TextField source="shortName" />
       <TextField source="school" />
       <EmailField source="blog" />
-      <TextField source="hide" />
+      <BooleanField source="hide" />
       <TextField source="defaultStartTime" />
       <TextField source="defaultEndTime" />
       <TextField source="defaultInvoiceItem" />
       <TextField source="defaultHoursPerDay" />
+      <EditButton />
       
     </Datagrid>
   </List>
