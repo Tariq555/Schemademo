@@ -12,4 +12,15 @@ module.exports = function (server, db) {
     }
     response.json(result)
   })
+
+  server.put('/data/classes', (request, response) => {
+    let user = request.body
+    let result
+    try {
+      result = db.prepare('UPDATE classes SET name = ?, shortName = ?, blog = ?, hide = ?, defaultStartTime = ?, defaultEndTime = ?, defaultHoursPerDay = ?').run([user.tname, user.shortName, user.blog, user.hide, user.defaultStartTime, user.defaultEndTime, user.defaultHoursPerDay])
+    } catch (e) {
+      console.error(e)
+    }
+    response.json(result)
+  })
 }
