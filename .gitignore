@@ -111,4 +111,4 @@ dist
 .tern-port
 
 #Database
-#schedule-data-service/database/nodehill_schedule.db
+schedule-data-service/database/nodehill_schedule.db
