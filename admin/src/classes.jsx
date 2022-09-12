@@ -52,7 +52,7 @@ export const ClassesEdit = () => (
   </Edit>
 );
 
-export const ClassesCreate = () => (
+export const ClassesCreate = props => (
   <Create {...props}>
     <SimpleForm>
       <TextField disabled source="id" reference="classes" />
