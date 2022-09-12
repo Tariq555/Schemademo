@@ -1,4 +1,20 @@
-import {Datagrid, EmailField, List, TextField, UrlField} from 'react-admin';
+import {
+  List,
+  Datagrid,
+  TextField,
+  ReferenceField,
+  EditButton,
+  Edit,
+  EmailField,
+  Create,
+  SimpleForm,
+  ReferenceInput,
+  TextInput,
+  BooleanField,
+  BooleanInput,
+  PasswordInput,
+  required
+} from 'react-admin';
 
 export const ClassesList = () => (
   <List>
