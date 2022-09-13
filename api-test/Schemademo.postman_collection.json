@@ -1,0 +1,258 @@
+{
+	"info": {
+		"_postman_id": "e50f6503-7b15-4e89-a3a1-78aee7d82519",
+		"name": "Schemademo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19625040"
+	},
+	"item": [
+		{
+			"name": "Admin-login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"email\": \"exempel@nodehill.com\",\r\n\"password\": \"abc123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7666/data/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7666",
+					"path": [
+						"data",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET-teachers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7666/data/teachers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7666",
+					"path": [
+						"data",
+						"teachers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Teacher-Create",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"email\", '{{$randomEmail}}');\r",
+							"//pm.environment.set(\"firstname\", 'Brad' +Math.floor((Math.random()*10)));\r",
+							"pm.environment.set(\"firstname\", '{{$randomFirstName}}');\r",
+							"\r",
+							"\r",
+							"pm.environment.set(\"lastname\",'{{$randomLastName}}');\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"const responseset = pm.response.json();\r",
+							"pm.globals.set(\"newid\", responseset.lastInsertRowid);\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstname\": \"{{firstname}}\",\r\n    \"lastname\": \"{{lastname}}\",\r\n    \"initials\": \"\",\r\n    \"phone\": \"978987\",\r\n    \"email\": \"{{email}}\",\r\n    \"color\": \"blue\",\r\n    \"hide\": \"\",\r\n    \"password\": \"12345678\",\r\n    \"roles\": \"user\"\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7666/data/teachers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7666",
+					"path": [
+						"data",
+						"teachers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Teacher-Edit",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"email\", '{{$randomEmail}}');\r",
+							"//pm.environment.set(\"firstname\", 'Brad' +Math.floor((Math.random()*10)));\r",
+							"pm.environment.set(\"firstname\", '{{$randomFirstName}}');\r",
+							"\r",
+							"\r",
+							"pm.environment.set(\"lastname\",'{{$randomLastName}}');\r",
+							"\r",
+							"pm.environment.set(\"phone\",'{{$randomPhoneNumber}}');"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"firstname\": \"{{firstname}}\",\r\n    \"lastname\": \"{{lastname}}\",\r\n    \"initials\": \"\",\r\n    \"phone\": \"{{phone}}\",\r\n    \"email\": \"{{email}}\",\r\n    \"color\": \"blue\",\r\n    \"hide\": \"\"\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7666/data/teachers/{{newid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7666",
+					"path": [
+						"data",
+						"teachers",
+						"{{newid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Teacher-Delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7666/data/teachers/{{newid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7666",
+					"path": [
+						"data",
+						"teachers",
+						"{{newid}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "{{lastInsertRowid}}"
+		}
+	]
+}
