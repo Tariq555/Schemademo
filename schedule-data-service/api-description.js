@@ -36,7 +36,7 @@ module.exports = function(host){
         },
         {
             route:"/data/classes",
-            methods: ["GET"],
+            methods: ["GET", "POST", "PUT", "DELETE"],
             description:"Get list of classes",
             link: host  + "/data/classes"
         },

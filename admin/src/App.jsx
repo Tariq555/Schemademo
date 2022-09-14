@@ -3,7 +3,7 @@ import * as React from "react";
 import { Admin, Resource, EditGuesser } from 'react-admin';
 import { SchoolList, SchoolEdit, SchoolCreate } from './schools';
 import { TeacherList, TeacherCreate, TeacherEdit } from './teachers';
-import { ClassesList } from './classes';
+import { ClassesList, ClassesEdit, ClassesCreate } from './classes';
 import TeacherIcon from '@mui/icons-material/Person';
 import SchoolIcon from '@mui/icons-material/School';
 import ClassIcon from '@mui/icons-material/Class';
@@ -21,7 +21,7 @@ const App = () => (
   <Admin dashboard={Dashboard} dataProvider={dataProvider}>
     <Resource name="teachers" list={TeacherList} edit={TeacherEdit} create={TeacherCreate} icon={TeacherIcon} />
     <Resource name="schools" list={SchoolList} edit={SchoolEdit} create={SchoolCreate} icon={SchoolIcon} />
-    <Resource name="classes" list={ClassesList} icon={ClassIcon} />
+    <Resource name="classes" list={ClassesList} edit={ClassesEdit} create={ClassesCreate} icon={ClassIcon} />
   </Admin>
 );
 
