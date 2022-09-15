@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "6a5c6581-ad3f-442a-b038-94b39950e7f9",
+		"_postman_id": "b76fc052-2ccb-428f-a928-8320ac1d0bfe",
 		"name": "Schemademo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "20293022"
+		"_exporter_id": "19625040"
 	},
 	"item": [
 		{
@@ -158,6 +158,9 @@
 					"script": {
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
 							"    pm.response.to.have.status(200);\r",
 							"});"
 						],
@@ -201,9 +204,7 @@
 					"script": {
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
-							"pm.test(\"Response time is less than 200ms\", function () {\r",
-							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
-							"});\r",
+							"\r",
 							"    pm.response.to.have.status(200);\r",
 							"});"
 						],
@@ -296,7 +297,7 @@
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"const responseset = pm.response.json();\r",
-							"pm.globals.set(\"newid\", responseset.lastInsertRowid);\r",
+							"pm.globals.set(\"newschoolid\", responseset.lastInsertRowid);\r",
 							"\r",
 							""
 						],
@@ -373,7 +374,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:7666/data/schools/{{newid}}",
+					"raw": "http://localhost:7666/data/schools/{{newschoolid}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -382,7 +383,7 @@
 					"path": [
 						"data",
 						"schools",
-						"{{newid}}"
+						"{{newschoolid}}"
 					]
 				}
 			},
@@ -396,9 +397,7 @@
 					"script": {
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
-							"pm.test(\"Response time is less than 200ms\", function () {\r",
-							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
-							"});\r",
+							"\r",
 							"    pm.response.to.have.status(200);\r",
 							"});"
 						],
@@ -428,7 +427,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:7666/data/schools/{{newid}}",
+					"raw": "http://localhost:7666/data/schools/{{newschoolid}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -437,7 +436,446 @@
 					"path": [
 						"data",
 						"schools",
-						"{{newid}}"
+						"{{newschoolid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Classes-GET",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7666/data/classes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7666",
+					"path": [
+						"data",
+						"classes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Classes-Create",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"clname\", '{{$randomDomainWord}}');\r",
+							"//pm.environment.set(\"firstname\", 'Brad' +Math.floor((Math.random()*10)));\r",
+							"pm.environment.set(\"shortname\", '{{$randomCountryCode}}');\r",
+							"\r",
+							"\r",
+							"pm.environment.set(\"school\",'{{$randomInt}}');\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"const responseset = pm.response.json();\r",
+							"pm.globals.set(\"newclassid\", responseset.lastInsertRowid);\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \r\n        \"name\": \"{{clname}}\",\r\n        \"shortName\": \"{{shortname}}\",\r\n        \"school\": {{school}},\r\n        \"blog\": \"https://ai20.lms.nodehill.se\",\r\n        \"hide\": \"1\",\r\n        \"defaultStartTime\": \"08:30\",\r\n        \"defaultEndTime\": \"16:00\",\r\n        \"defaultInvoiceItem\": 3,\r\n        \"defaultHoursPerDay\": 0\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7666/data/classes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7666",
+					"path": [
+						"data",
+						"classes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Classes-Edit",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"clname\", '{{$randomDomainWord}}');\r",
+							"//pm.environment.set(\"firstname\", 'Brad' +Math.floor((Math.random()*10)));\r",
+							"pm.environment.set(\"shortname\", '{{$randomCountryCode}}');\r",
+							"\r",
+							"\r",
+							"pm.environment.set(\"school\",'{{$randomInt}}');\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \r\n        \"name\": \"{{clname}}\",\r\n        \"shortName\": \"{{shortname}}\",\r\n        \"school\": {{school}},\r\n        \"blog\": \"https://ai20.lms.nodehill.se\",\r\n        \"hide\": \"1\",\r\n        \"defaultStartTime\": \"08:30\",\r\n        \"defaultEndTime\": \"16:00\",\r\n        \"defaultInvoiceItem\": 3,\r\n        \"defaultHoursPerDay\": 0\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7666/data/classes/{{newclassid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7666",
+					"path": [
+						"data",
+						"classes",
+						"{{newclassid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Classes-Delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7666/data/classes/{{newclassid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7666",
+					"path": [
+						"data",
+						"classes",
+						"{{newclassid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Courses-GET",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7666/data/courses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7666",
+					"path": [
+						"data",
+						"courses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "courses-CREATE",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.environment.set(\"name\", '{{$randomFirstName}}');\r",
+							"\r",
+							"\r",
+							"pm.environment.set(\"shortName\",'{{$randomLastName}}');\r",
+							"pm.environment.set(\"startDate\",'{{$randomDateFuture}}');\r",
+							"pm.environment.set(\"hour\",'{{$randomInt}}');\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"const responseset = pm.response.json();\r",
+							"pm.globals.set(\"csid\", responseset.lastInsertRowid);\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \r\n        \"name\": \"{{name}}\",\r\n        \"shortName\": \"{{shortName}}\",\r\n        \"points\": \"\",\r\n        \"startDate\": \"{{startDate}}\",\r\n        \"endDate\": \"{{startDate}}\",\r\n        \"hoursPerDay\": \"{{hour}}\"\r\n        \r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7666/data/courses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7666",
+					"path": [
+						"data",
+						"courses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Courses-EDIT",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"name\", '{{$randomFirstName}}');\r",
+							"\r",
+							"pm.environment.set(\"shortName\",'{{$randomLastName}}');\r",
+							"pm.environment.set(\"class\",'{{$$randomCompanySuffix}}');\r",
+							"pm.environment.set(\"startDate\",'{{$randomDateFuture}}');\r",
+							"\r",
+							"pm.environment.set(\"hour\",'{{$randomInt}}');\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"name\": \"{{name}}\",\r\n        \"shortName\": \"{{shortName}}\",\r\n        \"class\": \"{{class}}\",\r\n        \"points\": \"\",\r\n        \"startDate\": \"{{startDate}}\",\r\n        \"endDate\": \"{{startDate}}\",\r\n        \"plan\": \"\",\r\n        \"hoursPerDay\": \"{{hour}}\",\r\n        \"hide\": \"\"\r\n\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7666/data/courses/{{csid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7666",
+					"path": [
+						"data",
+						"courses",
+						"{{csid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Courses-DELETE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7666/data/courses/{{csid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7666",
+					"path": [
+						"data",
+						"courses",
+						"{{csid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin-logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"email\": \"exempel@nodehill.com\",\r\n\"password\": \"abc123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7666/data/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7666",
+					"path": [
+						"data",
+						"login"
 					]
 				}
 			},
