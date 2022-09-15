@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "e50f6503-7b15-4e89-a3a1-78aee7d82519",
+		"_postman_id": "6a5c6581-ad3f-442a-b038-94b39950e7f9",
 		"name": "Schemademo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "19625040"
+		"_exporter_id": "20293022"
 	},
 	"item": [
 		{
@@ -242,6 +242,201 @@
 					"path": [
 						"data",
 						"teachers",
+						"{{newid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET-schools",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7666/data/schools",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7666",
+					"path": [
+						"data",
+						"schools"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Schools-create",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.environment.set(\"name\", '{{$randomFirstName}}');\r",
+							"\r",
+							"\r",
+							"pm.environment.set(\"shortName\",'{{$randomLastName}}');\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"const responseset = pm.response.json();\r",
+							"pm.globals.set(\"newid\", responseset.lastInsertRowid);\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{name}}\",\r\n    \"shortName\": \"{{shortName}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7666/data/schools",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7666",
+					"path": [
+						"data",
+						"schools"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Schools-edit",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.environment.set(\"name\", '{{$randomFirstName}}');\r",
+							"\r",
+							"pm.environment.set(\"shortName\",'{{$randomLastName}}');\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{name}}\",\r\n    \"shortName\": \"{{shortName}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7666/data/schools/{{newid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7666",
+					"path": [
+						"data",
+						"schools",
+						"{{newid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Schools-delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7666/data/schools/{{newid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7666",
+					"path": [
+						"data",
+						"schools",
 						"{{newid}}"
 					]
 				}
