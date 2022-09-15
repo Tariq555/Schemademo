@@ -1,7 +1,12 @@
 // in src/App.js
 import * as React from "react";
 import { Admin, Resource } from 'react-admin';
-
+import { SchoolList, SchoolEdit, SchoolCreate } from './schools';
+import { TeacherList, TeacherCreate, TeacherEdit } from './teachers';
+import { ClassesList, ClassesEdit, ClassesCreate } from './classes';
+import TeacherIcon from '@mui/icons-material/Person';
+import SchoolIcon from '@mui/icons-material/School';
+import ClassIcon from '@mui/icons-material/Class';
 import CoursesList from './CoursesList'
 import CoursesCreate from './CoursesCreate'
 import CoursesEdit from './CoursesEdit'
@@ -18,6 +23,9 @@ const dataProvider = simpleRestProvider('/data');
 
 const App = () => (
   <Admin dashboard={Dashboard} dataProvider={dataProvider}>
+    <Resource name="teachers" list={TeacherList} edit={TeacherEdit} create={TeacherCreate} icon={TeacherIcon} />
+    <Resource name="schools" list={SchoolList} edit={SchoolEdit} create={SchoolCreate} icon={SchoolIcon} />
+    <Resource name="classes" list={ClassesList} edit={ClassesEdit} create={ClassesCreate} icon={ClassIcon} />
     <Resource name="courses" list={CoursesList} create={CoursesCreate} edit={CoursesEdit} />
 
   </Admin>
