@@ -2,7 +2,7 @@ name: CI for schemademo
 
 on:
   push:
-    branches: [dev, UI-Tests-Schools]
+    branches: [dev]
   pull_request:
     branches: [dev]
 
