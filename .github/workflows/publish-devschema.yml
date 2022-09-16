@@ -2,7 +2,7 @@ name: CI for schemademo
 
 on:
   push:
-    branches: [CICD_flow_Toriqul]
+    branches: [dev]
   pull_request:
     branches: [dev]
 
