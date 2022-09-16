@@ -42,9 +42,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-
-    # run the npm build command (not used in our project)
-    
     - run: npm run build-it
     - run: cd schedule-data-service && npm install
     - run: npm install -g newman
@@ -54,7 +51,7 @@ jobs:
     
     
   deploy:
-    name: "Deploy to CI-flow"
+    name: "Deploy to dev"
     needs: [api-tests]
     runs-on: ubuntu-latest
     steps:
@@ -79,12 +76,12 @@ jobs:
 
      
 
-      - name: Deploy from main 
+      - name: Deploy from dev
         # Here 'ssh dev' is like run command which will be the same for every branch 
         # 'cd dev' here dev is the folder we make in the server (aws-terminal)
         run: ssh dev 'cd dev/ && git fetch && git pull origin dev && npm install'
         
 
-      - name: Restart app 
-        # Here 'dev' is the name of the app running by pm2
+      - name: Restart Process
+        # Here 'app' is the name of the process running by pm2
         run: ssh dev 'pm2 restart app'        
