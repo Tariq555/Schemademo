@@ -1,4 +1,14 @@
-import {When, Then } from "@badeball/cypress-cucumber-preprocessor";
+import {Given, And, When, Then } from "@badeball/cypress-cucumber-preprocessor";
+
+Given("that I am logged in as admin", () =>{
+    cy.visit(Cypress.env('baseUrl'))
+    cy.get('#email').type(Cypress.env('email'))
+    cy.get('#password').type(Cypress.env('password'))
+    cy.get('#login-btn').click()
+})
+And("that I am on the admin page", () =>{
+    cy.visit(Cypress.env('adminUrl'))
+})
 
 When("I click on the schools button", () =>{
     cy.get('#root > div > div > div > main > div.MuiDrawer-root.RaSidebar-docked.MuiDrawer-docked.css-j24rge > div > div > div > a:nth-child(3)').click()
