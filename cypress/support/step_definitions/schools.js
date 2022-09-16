@@ -4,7 +4,7 @@ Given("that I am logged in as admin", () =>{
     cy.visit(Cypress.env('baseUrl'))
     cy.get('#email').type(Cypress.env('email'))
     cy.get('#password').type(Cypress.env('password'))
-    cy.get('#login').click()
+    cy.get('#login > input').click()
 })
 
 And("that I am on the admin page", () =>{
@@ -12,7 +12,7 @@ And("that I am on the admin page", () =>{
 })
 
 When("I click on the schools button", () =>{
-    cy.get('#root > div > div > div > main > MuiDrawer-root RaSidebar-docked MuiDrawer-docked css-mk2j8q').click()
+    cy.get('a[href*="#/schools"]').click()
 })
 
 Then("I should be able to create a new school", () =>{
@@ -29,7 +29,7 @@ Then("I should be able to see all the schools from school list", () =>{
 })
 
 Then("I should be able to edit a school", () =>{
-    cy.get('#main-content > div > div > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiCard-root.RaList-content.css-s18byi > div > div.RaDatagrid-tableWrapper > table > tbody > tr').last().click({force: true})
+    cy.get('a[aria-label*="Edit"]').last().click({force: true})
     cy.get('#name').type('TestEDIT')
     cy.get('#shortName').type('Tedi')
     cy.get('#main-content > div > div > div > form > div.MuiToolbar-root.MuiToolbar-gutters.MuiToolbar-regular.RaToolbar-desktopToolbar.css-1uwir8t > div > button.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-sizeMedium.MuiButton-containedSizeMedium.MuiButtonBase-root.css-1ou5ev1').click({force: true})
@@ -37,8 +37,8 @@ Then("I should be able to edit a school", () =>{
 })
 
 Then("I should be able to delete a school", () =>{
-    cy.get('#main-content > div > div > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiCard-root.RaList-content.css-s18byi > div > div.RaDatagrid-tableWrapper > table > tbody > tr').last().click({force: true})
-    cy.get('#main-content > div > div > div > form > div.MuiToolbar-root.MuiToolbar-gutters.MuiToolbar-regular.RaToolbar-desktopToolbar.css-1uwir8t > div > button.MuiButton-root.MuiButton-text.MuiButton-textPrimary.MuiButton-sizeSmall.MuiButton-textSizeSmall.MuiButtonBase-root.ra-delete-button.css-dd2tjh').click({force: true})
+    cy.get('input[type*="checkbox"]').last().click({force: true})
+    cy.get('button[aria-label*="Delete"]').click({force: true})
     cy.get('#root > div.MuiSnackbar-root.MuiSnackbar-anchorOriginBottomCenter.css-pvddw4 > div > div.MuiSnackbarContent-message.css-1w0ym84').should('contain', 'Element deleted')
     cy.get('#main-content > div > div > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiCard-root.RaList-content.css-s18byi > div > div.RaDatagrid-tableWrapper > table > tbody > tr').last().should('not.contain', 'Test SchoolTestEDIT').and('not.contain', 'TschTedi')
 })
