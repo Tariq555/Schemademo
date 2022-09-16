@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "4d5d41f3-3f25-443b-b2ab-d2c0e655ca0c",
+		"_postman_id": "b76fc052-2ccb-428f-a928-8320ac1d0bfe",
 		"name": "Schemademo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "19625040"
@@ -158,6 +158,9 @@
 					"script": {
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
 							"    pm.response.to.have.status(200);\r",
 							"});"
 						],
