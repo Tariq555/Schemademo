@@ -82,6 +82,6 @@ jobs:
         run: ssh dev 'cd dev/ && git fetch && git pull origin dev && npm install'
         
 
-      - name: Restart Process
+      - name: Restart Process to have update
         # Here 'app' is the name of the process running by pm2
         run: ssh dev 'pm2 restart app'        
