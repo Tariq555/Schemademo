@@ -12,7 +12,7 @@ And("that I am on the admin page", () =>{
 })
 
 When("I click on the schools button", () =>{
-    cy.get('#root > div > div > div > main > MuiDrawer-root RaSidebar-docked MuiDrawer-docked css-mk2j8q > div > div > div > a').click()
+    cy.get('#root > div > div > div > main > MuiDrawer-root RaSidebar-docked MuiDrawer-docked css-mk2j8q').click()
 })
 
 Then("I should be able to create a new school", () =>{
