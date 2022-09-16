@@ -4,7 +4,7 @@ Given("that I am logged in as admin", () =>{
     cy.visit(Cypress.env('baseUrl'))
     cy.get('#email').type(Cypress.env('email'))
     cy.get('#password').type(Cypress.env('password'))
-    cy.get('#login-btn').click()
+    cy.get('#login').click()
 })
 
 And("that I am on the admin page", () =>{
