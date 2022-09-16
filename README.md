@@ -4,10 +4,10 @@
 A schedule system REST API with an admin panel. 
 
 # Contributors
-1. Albin Björk 
-2. Mauro Andres Gil
-3. Oskar Knutsson
-4. Tariq Habach
+1. Albin Björk (AlbinB97)
+2. Mauro Andres Gil (MauroCataldi)
+3. Oskar Knutsson (Knuttas)
+4. Tariq Habach (Tariq555)
 5. Toriqul Islam (toriqul007)
 
 # Communications
@@ -25,7 +25,7 @@ A schedule system REST API with an admin panel.
 - Postman and Newman
 - Cypress
 - AWS Cloud
-- 
+
 
 # Work Process
 We are working in a group following Agil software development process and Scrum metology. We have divided the workflow into two sprints. We start every sprint by planning the workflow and setting up backlogs and finish the sprint with review and feedback. We try to have a distance meeting via discord ofen, so we can discuss the problems and progress. We also do pair-programming when we have time. 
