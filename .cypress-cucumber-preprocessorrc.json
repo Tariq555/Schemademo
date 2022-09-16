@@ -1,0 +1,7 @@
+{
+    "step-Def": [
+        "[filepath]/**/*.{js,ts}",
+        "[filepath].{js,ts}",
+        "cypress/e2e/step-Def/*.{js,ts}"
+    ]
+}
