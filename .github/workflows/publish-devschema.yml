@@ -1,10 +1,45 @@
-name: Deploy to devschema
-on: 
+name: CI for schemademo
+
+on:
   push:
-    branches: [ schedule_data_service ]
+    branches: [CICD_flow_Toriqul]
+  pull_request:
+    branches: [dev]
+
 jobs:
+  api-tests:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+ 
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+
+    # run the npm build command (not used in our project)
+    
+    - run: npm run build-it
+    - run: cd schedule-data-service && npm install
+    - run: npm install -g newman
+    - run: npm install -g pm2
+    - run: pm2 start "npm run dev"
+    - run: npm run api
+    
+    
+    
+
+
   deploy:
-    name: "Deploy schedule_data_service to devschema.nodehill.com"
+    name: "Deploy to CI-flow"
+    needs: [api-tests]
     runs-on: ubuntu-latest
     steps:
       - name: Configure SSH
@@ -26,8 +61,14 @@ jobs:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_PORT: ${{ secrets.SSH_PORT }}          
 
-      - name: Deploy from schedule_data_service
-        run: ssh dev 'cd /var/www/nodehill-schedule-dev && git fetch && git reset --hard origin/schedule_data_service && npm install'
+     
 
-      - name: Restart app
-        run: ssh dev 'cd /var/www/nodehill-schedule-dev/schedule-data-service && pm2 restart index'        
+      - name: Deploy from main 
+        # Here 'ssh dev' is like run command which will be the same for every branch 
+        # 'cd dev' here dev is the folder we make in the server (aws-terminal)
+        run: ssh dev 'cd dev/ && git fetch && git pull origin dev'
+        
+
+      - name: Restart app 
+        # Here 'dev' is the name of the app running by pm2
+        run: ssh dev 'pm2 restart app'        

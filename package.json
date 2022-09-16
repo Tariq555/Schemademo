@@ -4,9 +4,10 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "server": "--middlewares ./range.js",
     "api": "newman run api-test/Schemademo.postman_collection.json",
-    "dev": "cd schedule-data-service && node index"
+    "dev": "cd schedule-data-service && node index",
+    "build-it": "cd admin && npm install && npm run build",
+    "start-it": "cd schedule-data-service/ && npm install && node index"
   },
   "keywords": [],
   "author": "",
